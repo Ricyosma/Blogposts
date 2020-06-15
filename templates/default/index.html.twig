@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DefaultController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+    {% if app.user %}
+
+    {% endif %}
+    <div class="row">
+            {% for Blog in blogs %}
+                {% if Blog.active == true %}
+                <div class="col-md-4">
+                <h3> {{ Blog.Title | raw }}</h3>
+                    <img style="width: 100px; height:100px;" src="{{ vich_uploader_asset(Blog, 'imageFile') }}" alt="{{ Blog.image }}" />
+                    <p>by {{ Blog.Madeby}}</p> <p>created at: {{Blog.Createdate|date('Y-m-d')}}</p>
+                    {{ Blog.summary | raw }}<br>
+                    <a href="{{ path('blog_show', {'id': Blog.id}) }}" class="btn btn-outline-secondary" style="margin-top:15px;">Lees verder</a>
+                        {% if app.user %}
+                            <a href="{{ path('blog_edit', {'id': Blog.id}) }}"><img style="height:25px; width:25px;" src="{{ asset('build/images/edit.png') }}"></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+        {% endfor %}
+
+    </div>
+    {% if app.user %}
+    <div>
+        <a class="btn btn-primary btn-sm" href="{{ path('blog_new') }}"><img style="height:50px; width:50px;" src="{{ asset('build/images/new.png') }}">Add new entry</a>
+    </div>
+    {% endif %}
+{% endblock %}

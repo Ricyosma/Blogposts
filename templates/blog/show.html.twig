@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+    <div class="col-md-10 blogShort">
+
+                <h2>{{ blog.Title }}</h2>
+        <article><p>
+                {{ blog.Text|raw }}<br>
+                <img style="width: 250px; height:252px;" src="{{ vich_uploader_asset(blog, 'imageFile') }}" alt="{{ blog.image }}" /><br>
+                <b>Created: {{ blog.Createdate ? blog.Createdate|date('Y-m-d H:i:s') : '' }}<br>
+                Edited: {{ blog.Editdate ? blog.Editdate|date('Y-m-d H:i:s') : '' }}</b>
+            </p>
+        </article>
+
+
+    <a style="margin-bottom: 25px;" class="btn btn-primary" href="{{ path('blog_index') }}">Terug naar overzicht</a><br>
+{% if app.user %}
+    <a class="btn btn-primary" href="{{ path('blog_edit', {'id': blog.id}) }}">edit</a>
+    {{ include('blog/_delete_form.html.twig') }}
+{% endif %}
+
+    </div>
+{% endblock %}
